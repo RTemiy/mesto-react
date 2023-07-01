@@ -8,9 +8,9 @@ import Card from "./Card";
 
 export default function Main({onEditProfile, onAddPlace ,onEditAvatar, onCardClick}) {
 
-  const [userName,setUserName] = useState();
-  const [userDescription ,setUserDescription ] = useState();
-  const [userAvatar,setUserAvatar] = useState();
+  const [userName,setUserName] = useState('');
+  const [userDescription ,setUserDescription ] = useState('');
+  const [userAvatar,setUserAvatar] = useState('');
   const [cards, setCards] = useState([]);
 
   useEffect(()=>{
@@ -18,12 +18,18 @@ export default function Main({onEditProfile, onAddPlace ,onEditAvatar, onCardCli
       setUserName(res.name);
       setUserDescription(res.about);
       setUserAvatar(res.avatar)
+    }).catch(e =>{
+      console.log(e)
     })
-  })
 
-  api.getInitialCards().then(res=>{
-    setCards(res)
-  })
+    api.getInitialCards().then(res=>{
+      setCards(res)
+    }).catch(e =>{
+      console.log(e)
+    })
+
+  }, []);
+
 
   return(
     <main className="content">
@@ -42,8 +48,8 @@ export default function Main({onEditProfile, onAddPlace ,onEditAvatar, onCardCli
         <button type="button" className="profile__add hover-anim" onClick={onAddPlace}></button>
       </section>
       <section className="cards">
-        {cards.map((card, i) => (
-          <Card key={i} name={card.name} link={card.link} likes={card.likes.length} onCardClick={onCardClick}/>
+        {cards.map((cardInfo) => (
+          <Card key={cardInfo._id} card={cardInfo} onCardClick={onCardClick}/>
         ))}
       </section>
     </main>

@@ -1,21 +1,19 @@
-import Header from './components/Header'
-import Main from "./components/Main";
-import Footer from "./components/Footer";
+import Header from './Header'
+import Main from "./Main";
+import Footer from "./Footer";
 import React, {useState} from "react";
-import PopupWithForm from "./components/PopupWithForm";
-import ImagePopup from "./components/ImagePopup";
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 export default function App() {
 
   const [isEditAvatarPopupOpen,setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen,setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen,setAddPlacePopupOpen] = useState(false);
-  const [isImagePopupOpen,setImagePopupOpen] = useState(false);
-  const [selectedCard,setSelectedCard] = useState('');
+  const [selectedCard,setSelectedCard] = useState(null);
   
   function handleCardClick(link) {
     setSelectedCard(link);
-    setImagePopupOpen(true);
   }
 
   function handleEditAvatarClick (){
@@ -33,8 +31,8 @@ export default function App() {
   function closeAllPopups() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
-    setEditAvatarPopupOpen(false);
-    setImagePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setSelectedCard(null)
   }
 
   return (
@@ -42,10 +40,26 @@ export default function App() {
       <Header/>
       <Main onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onEditProfile={handleEditProfileClick} onCardClick={handleCardClick}/>
       <Footer/>
-      <PopupWithForm name='edit-avatar' isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} title='Обновить аватар'/>
-      <PopupWithForm name='edit-profile' isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} title='Редактировать профиль'/>
-      <PopupWithForm name='add-place' isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} title='Новое место'/>
-      <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups}/>
+      <PopupWithForm name='edit-avatar' buttonText='Сохранить' isOpen={isEditAvatarPopupOpen} children={[
+        <input placeholder="Ссылка на картинку" required type="url" id="form_avatar-link" name="avatar" className="popup__input"/>,
+        <span id="form_avatar-link-error" className="popup__span"></span>
+        ]} onClose={closeAllPopups} title='Обновить аватар'/>
+
+      <PopupWithForm name='edit-profile' buttonText='Сохранить' isOpen={isEditProfilePopupOpen} children={[
+        <input placeholder="Имя" id="form_name" name="name" required minLength="2" maxLength="40" className="popup__input"/>,
+        <span id="form_name-error" className="popup__span"></span>,
+        <input placeholder="О себе" id="form_about" name="about" required minLength="2" maxLength="200" className="popup__input"/>,
+        <span id="form_about-error" className="popup__span"></span>
+      ]} onClose={closeAllPopups} title='Редактировать профиль'/>
+
+      <PopupWithForm name='add-place' buttonText='Создать' isOpen={isAddPlacePopupOpen} children={[
+        <input placeholder="Название" id="form_place-name" required minLength="2" maxLength="30" name="name" className="popup__input"/>,
+        <span id="form_place-name-error" className="popup__span"></span>,
+        <input placeholder="Ссылка на картинку" required type="url" id="form_place-link" name="link" className="popup__input"/>,
+        <span id="form_place-link-error" className="popup__span"></span>
+      ]} onClose={closeAllPopups} title='Новое место'/>
+
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
 
       {/*<div id="popup_edit-profile" className="popup">
         <div className="popup__container">
