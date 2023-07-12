@@ -9,7 +9,7 @@
 - Файловая структура Nested
 - CSS Анимации
 - CSS Forms
-- React (функциональный стиль)
+- React (функциональный стиль: useState, useEffect, useContext, refs, controlled inputs)
 - Обработка GET, PUT, DELETE запросов
 ### Планы на доработку
 - Разные профили
