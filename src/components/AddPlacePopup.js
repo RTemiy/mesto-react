@@ -21,6 +21,11 @@ export default function AddPlacePopup({isOpen, onClose, onAddCard}) {
     })
   }
 
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+  }, [isOpen]);
+
   return(
     <PopupWithForm name='add-place' buttonText='Создать' isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} title='Новое место'>
       <input placeholder="Название" id="form_place-name" onChange={handleChangeName} required minLength="2" value={name} maxLength="30" name="name" className="popup__input"/>

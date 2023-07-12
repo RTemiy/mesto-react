@@ -15,7 +15,7 @@ export default function Card({card, onCardClick, onCardLike, onCardDelete}) {
   );
 
   function handleClick() {
-    onCardClick(card.link);
+    onCardClick(card);
   }
 
   function handleCardDelete() {

@@ -64,8 +64,8 @@ export default function App() {
     }
   }
 
-  function handleCardClick(link) {
-    setSelectedCard(link);
+  function handleCardClick(card) {
+    setSelectedCard(card);
   }
 
   function handleEditAvatarClick (){
